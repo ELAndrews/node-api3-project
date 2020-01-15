@@ -3,6 +3,8 @@ const userRouter = require("./users/userRouter");
 
 const server = express();
 
+server.use(express.json());
+
 //custom middleware
 
 function logger(req, res, next) {

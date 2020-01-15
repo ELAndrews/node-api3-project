@@ -1,5 +1,6 @@
 const express = require("express");
 const Users = require("./userDb");
+
 const router = express.Router();
 
 router.post("/", validateNewUser, (req, res) => {
@@ -67,9 +68,7 @@ router.delete("/:id", validateUserId, (req, res) => {
       }
     })
     .catch(error => {
-      res.status(500).json({
-        message: error.message
-      });
+      next(error);
     });
 });
 
@@ -77,7 +76,7 @@ router.put("/:id", validateUserId, (req, res) => {
   // do your magic!
   Users.update(req.params.id, req.body)
     .then(data => {
-      console.log(data);
+      res.status(202).json("User updated");
     })
     .catch(error => {
       res.status(500).json({
@@ -86,7 +85,7 @@ router.put("/:id", validateUserId, (req, res) => {
     });
 });
 
-//custom middleware
+// CUSTOM MIDDLEWARE
 
 function validateUserId(req, res, next) {
   // do your magic!
